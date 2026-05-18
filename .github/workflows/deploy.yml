@@ -16,11 +16,11 @@ jobs:
         with:
           node-version: 16
 
-      - run: npm ci
+      - run: npm install --legacy-peer-deps
 
       - run: npm run build
         env:
-          NODE_OPTIONS: --openssl-legacy-provider
+          NODE_OPTIONS: --openssl-legacy-provider --max-old-space-size=4096
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
