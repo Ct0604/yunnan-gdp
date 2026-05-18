@@ -115,34 +115,34 @@ function ok(data) {
   return { code: 200, success: true, data: data }
 }
 
-// ─── 注册 Mock 接口 ───
-Mock.mock(new RegExp('/api/findYunNanGDP'), 'get', () => ok(yunnanGdp))
-Mock.mock(new RegExp('/api/findCityGDP'), 'get', () => ok(cityGdp))
-Mock.mock(new RegExp('/api/findNationalGDP'), 'get', () => ok(nationalGdp))
-Mock.mock(new RegExp('/api/findQuarterGDP'), 'get', () => ok(quarterGdp))
-Mock.mock(new RegExp('/api/findConsumption'), 'get', () => ok(consumption))
-Mock.mock(new RegExp('/api/findPopulation'), 'get', () => ok(population))
-Mock.mock(new RegExp('/api/findRate'), 'get', () => ok(rate))
-Mock.mock(new RegExp('/api/findNationalPopulation'), 'get', () => ok(nationalPopulation))
-Mock.mock(new RegExp('/api/findLife'), 'get', () => ok(life))
-Mock.mock(new RegExp('/api/findExpenditureMethodAndIncomeMethod'), 'get', () => ok(yunnanGdp))
+// ─── 注册 Mock 接口（宽松匹配，确保覆盖带参数请求） ───
+Mock.mock(new RegExp('.*/api/findYunNanGDP.*'), 'get', () => ok(yunnanGdp))
+Mock.mock(new RegExp('.*/api/findCityGDP.*'), 'get', () => ok(cityGdp))
+Mock.mock(new RegExp('.*/api/findNationalGDP.*'), 'get', () => ok(nationalGdp))
+Mock.mock(new RegExp('.*/api/findQuarterGDP.*'), 'get', () => ok(quarterGdp))
+Mock.mock(new RegExp('.*/api/findConsumption.*'), 'get', () => ok(consumption))
+Mock.mock(new RegExp('.*/api/findPopulation.*'), 'get', () => ok(population))
+Mock.mock(new RegExp('.*/api/findRate.*'), 'get', () => ok(rate))
+Mock.mock(new RegExp('.*/api/findNationalPopulation.*'), 'get', () => ok(nationalPopulation))
+Mock.mock(new RegExp('.*/api/findLife.*'), 'get', () => ok(life))
+Mock.mock(new RegExp('.*/api/findExpenditureMethodAndIncomeMethod.*'), 'get', () => ok(yunnanGdp))
 
 // ─── 后台管理 Mock ───
-Mock.mock(new RegExp('/api/admin/login'), 'post', () => {
+Mock.mock(new RegExp('.*/api/admin/login.*'), 'post', () => {
   return { code: 200, success: true, data: { token: 'mock-admin-token-2024' } }
 })
-Mock.mock(new RegExp('/api/admin/check'), 'get', () => {
+Mock.mock(new RegExp('.*/api/admin/check.*'), 'get', () => {
   return { code: 200, success: true, data: { username: 'admin', role: 'admin' } }
 })
-Mock.mock(new RegExp('/api/admin/tables'), 'get', () => {
+Mock.mock(new RegExp('.*/api/admin/tables.*'), 'get', () => {
   return { code: 200, success: true, data: ['yunnan_gdp', 'citygdp', 'national_gdp', 'quarter_gdp', 'consumption', 'population', 'rate', 'national_population', 'life'] }
 })
 
 // ─── 后台 CRUD Mock ───
 ;['yunnanGdp', 'cityGdp', 'nationalGdp', 'quarterGdp', 'consumption', 'population', 'rate', 'nationalPopulation', 'life'].forEach(name => {
-  Mock.mock(new RegExp(`/api/${name}$`), 'get', () => ok([]))
-  Mock.mock(new RegExp(`/api/${name}/\\d+`), 'get', () => ok({}))
-  Mock.mock(new RegExp(`/api/${name}$`), 'post', () => ok({}))
-  Mock.mock(new RegExp(`/api/${name}$`), 'put', () => ok({}))
-  Mock.mock(new RegExp(`/api/${name}/\\d+`), 'delete', () => ok({}))
+  Mock.mock(new RegExp(`.*/api/${name}$.*`), 'get', () => ok([]))
+  Mock.mock(new RegExp(`.*/api/${name}/\\d+.*`), 'get', () => ok({}))
+  Mock.mock(new RegExp(`.*/api/${name}$.*`), 'post', () => ok({}))
+  Mock.mock(new RegExp(`.*/api/${name}$.*`), 'put', () => ok({}))
+  Mock.mock(new RegExp(`.*/api/${name}/\\d+.*`), 'delete', () => ok({}))
 })
