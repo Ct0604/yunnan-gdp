@@ -23,8 +23,8 @@ import '@/assets/css/public.scss'
 import "@/assets/css/index.scss"
 import * as filters from '@/directives/filters'
 
-// Mock已禁用 — 数据来自真实后端API
-// require('./mock/mock')
+// Mock数据 — GitHub Pages 静态部署无后端，使用 Mock 数据
+require('./mock/mock')
 
 Vue.config.productionTip = false;
 
