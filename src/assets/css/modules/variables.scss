@@ -1,0 +1,157 @@
+//
+// Design Token System — 映射自 DESIGN.md
+// 同时提供 CSS 自定义属性 (var(--xxx)) 和 SCSS 变量 ($xxx)
+//
+
+// ══════════════════════════════════════════
+// CSS 自定义属性 — 运行时通过 var() 引用
+// ══════════════════════════════════════════
+:root {
+  --color-canvas: #020617;
+  --color-canvas-soft: #060b1a;
+  --color-surface: #0f172a;
+  --color-surface-elevated: #1e293b;
+  --color-surface-hover: #273449;
+  --color-primary: #3b82f6;
+  --color-primary-soft: #60a5fa;
+  --color-primary-gradient: linear-gradient(92deg, #0072ff 0%, #00eaff 48.85%, #01aaff 100%);
+  --color-primary-glow: 0 0 12px rgba(59,130,246,0.3);
+  --color-accent-cyan: #00eaff;
+  --color-accent-cyan-glow: 0 0 8px rgba(0,234,255,0.4);
+  --color-accent-green: #10b981;
+  --color-accent-amber: #f59e0b;
+  --color-accent-rose: #f43f5e;
+  --color-on-canvas: #e2e8f0;
+  --color-on-canvas-mute: #94a3b8;
+  --color-on-canvas-dim: #64748b;
+  --color-on-surface: #f1f5f9;
+  --color-on-surface-mute: #94a3b8;
+  --color-on-surface-dim: #64748b;
+  --color-on-primary: #ffffff;
+  --color-hairline: rgba(59,130,246,0.15);
+  --color-hairline-strong: rgba(59,130,246,0.25);
+  --color-hairline-glow: rgba(0,234,255,0.2);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --font-display-xl: 38px;
+  --font-display-lg: 20px;
+  --font-heading: 16px;
+  --font-body: 14px;
+  --font-body-sm: 13px;
+  --font-caption: 12px;
+  --font-number-lg: 28px;
+  --font-number-md: 22px;
+  --font-number-sm: 18px;
+  --font-weight-display: 900;
+  --font-weight-heading: 600;
+  --font-weight-body: 400;
+  --font-weight-number: 700;
+  --letter-spacing-display: 6px;
+  --letter-spacing-heading: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 9999px;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-elevated: 0 8px 40px rgba(0,0,0,0.6);
+  --shadow-glow-primary: 0 0 12px rgba(59,130,246,0.3);
+  --shadow-glow-cyan: 0 0 8px rgba(0,234,255,0.4);
+  --shadow-inner-glow: inset 0 1px 0 rgba(255,255,255,0.05);
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --chart-text: #e2e8f0;
+  --chart-text-muted: #94a3b8;
+  --chart-axis-line: rgba(59,130,246,0.15);
+  --chart-split-line: rgba(59,130,246,0.08);
+  --chart-tooltip-bg: rgba(15,23,42,0.95);
+  --chart-tooltip-border: rgba(59,130,246,0.25);
+  --admin-sidebar-bg: #0f172a;
+  --admin-sidebar-text: #94a3b8;
+  --admin-sidebar-active: #3b82f6;
+  --admin-topbar-bg: #1e293b;
+  --admin-content-bg: #020617;
+  --admin-login-bg: #020617;
+  --admin-login-card-bg: #0f172a;
+  --admin-stat-card-bg: #1e293b;
+}
+
+// ══════════════════════════════════════════
+// SCSS 变量 — 编译时 @each 循环引用 (兼容 index.scss 等旧代码)
+// ══════════════════════════════════════════
+$primary-color: #3b82f6;
+$info-color: #3b82f6;
+
+// 颜色 (供 index.scss @each 循环生成 .text-xxx / .bg-xxx)
+$colors: (
+  "primary": #3b82f6,
+  "info-1": #60a5fa,
+  "info": #3b82f6,
+  "white": #ffffff,
+  "light": #f9f9f9,
+  "grey-1": #999999,
+  "grey": #666666,
+  "dark-1": #5f5f5f,
+  "dark": #222222,
+  "black-1": #171823,
+  "black": #000000,
+  "icon": #00eaff
+);
+
+// 字体大小 (供 index.scss @each 循环生成 .fs-xxx)
+$base-font-size: 0.2rem;
+$font-sizes: (
+  xxs: 0.1,
+  xs: 0.125,
+  sm: 0.2875,
+  md: 0.1625,
+  lg: 0.175,
+  xl: 0.2,
+  xxl: 0.225,
+  xxxl: 0.25,
+);
+
+// Flex 工具
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+  evenly: space-evenly,
+);
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch,
+);
+
+// 间距工具
+$spacing-types: (
+  m: margin,
+  p: padding,
+);
+$spacing-directions: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left,
+);
+$spacing-base-size: 0.5rem;
+$spacing-sizes: (
+  0: 0,
+  1: 0.5,
+  2: 1,
+  3: 1.5,
+  4: 2,
+  5: 2.5,
+);
