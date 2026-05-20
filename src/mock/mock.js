@@ -87,6 +87,15 @@ const life = toCamel([
   { life_expectancy: 75.7, male_life: 78.4, female_life: 83.6 }
 ])
 
+// ─── 支出法/收入法 GDP ───
+const expenditureIncome = toCamel([
+  { year: '2025年', expenditureGdp: 32810.55, incomeGdp: 32720.01 },
+  { year: '2024年', expenditureGdp: 31580.22, incomeGdp: 31488.98 },
+  { year: '2023年', expenditureGdp: 30068.45, incomeGdp: 29973.79 },
+  { year: '2022年', expenditureGdp: 28990.10, incomeGdp: 28918.30 },
+  { year: '2021年', expenditureGdp: 27188.56, incomeGdp: 27104.40 }
+])
+
 function ok(data) {
   return { code: 200, success: true, data: data }
 }
@@ -109,30 +118,46 @@ const apiMap = {
 axios.interceptors.request.use(
   config => {
     const url = config.url || ''
+
+    // ── 匹配具体 API，返回真实数据 ──
+    let handled = false
     for (const [key, data] of Object.entries(apiMap)) {
       if (url.includes(key)) {
         config.adapter = () => Promise.resolve({
           data: ok(data), status: 200, statusText: 'OK', headers: {}, config, request: {}
         })
+        handled = true
         break
       }
     }
 
-    if (url.includes('/admin/login')) {
+    // ── 后台管理接口 ──
+    if (!handled && url.includes('/admin/login')) {
       config.adapter = () => Promise.resolve({
         data: { code: 200, success: true, data: { token: 'mock-admin-token' } },
         status: 200, statusText: 'OK', headers: {}, config, request: {}
       })
+      handled = true
     }
-    if (url.includes('/admin/check')) {
+    if (!handled && url.includes('/admin/check')) {
       config.adapter = () => Promise.resolve({
         data: { code: 200, success: true, data: { username: 'admin', role: 'admin' } },
         status: 200, statusText: 'OK', headers: {}, config, request: {}
       })
+      handled = true
     }
-    if (url.includes('/admin/tables')) {
+    if (!handled && url.includes('/admin/tables')) {
       config.adapter = () => Promise.resolve({
         data: { code: 200, success: true, data: ['yunnan_gdp', 'citygdp', 'national_gdp', 'quarter_gdp', 'consumption', 'population', 'rate', 'national_population', 'life'] },
+        status: 200, statusText: 'OK', headers: {}, config, request: {}
+      })
+      handled = true
+    }
+
+    // ── 兜底：所有未匹配的 /api/ 请求返回空数组，防止发到 localhost 超时 ──
+    if (!handled && url.includes('/api/')) {
+      config.adapter = () => Promise.resolve({
+        data: { code: 200, success: true, data: [] },
         status: 200, statusText: 'OK', headers: {}, config, request: {}
       })
     }
