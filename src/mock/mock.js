@@ -102,7 +102,7 @@ const apiMap = {
   'findRate': rate,
   'findNationalPopulation': nationalPopulation,
   'findLife': life,
-  'findExpenditureMethodAndIncomeMethod': yunnanGdp
+  'findExpenditureMethodAndIncomeMethod': expenditureIncome
 }
 
 // ─── Axios 请求拦截：直接返回 Mock 数据 ───
